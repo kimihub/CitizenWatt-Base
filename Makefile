@@ -14,8 +14,8 @@ prefix=$(DESTDIR)/opt/citizenwatt
 files=`ls | grep -v debian`
 sup_prefix=$(DESTDIR)/etc/supervisor/conf.d/
 
-# The recommended compiler flags for the Raspberry Pi
-CCFLAGS=-Wall -Ofast -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+# The recommended compiler flags for the Raspberry Pi 3
+CCFLAGS=-Wall -Ofast -mfpu=neon-vfpv4 -mfloat-abi=hard -march=armv7-a -mtune=cortex-a7
 
 all: receive
 
