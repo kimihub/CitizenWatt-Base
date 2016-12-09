@@ -1,4 +1,4 @@
-# CitizenWatt for Raspnerry Pi 3
+# CitizenWatt for Raspberry Pi 3
 
 Adaptations pour fonctionner l'application CitizenWatt sur Raspberry Pi 3.  
 _Work in progress_ : https://hackpad.com/DAISEE-Installation-CitizenWatt-sur-RPi3-ooSfcWLcyl8    
