@@ -13,4 +13,17 @@ au lieu de
   
 * Compilation du package citizenwatt-visu  
   
-* Compilation d'une librairie RF24 en remplacement du package librf24-dev  
+* Compilation d'une librairie RF24 en remplacement du package librf24-dev   
+Utilisation de la librairie [TMRh20](https://github.com/TMRh20/RF24) et de l'interface SPIDEV  
+documentation : http://tmrh20.github.io/RF24/RPi.html  
+
+* Modification du programme receive.cpp   
+prise en compte de la librairie TMRh20 :   
+   
+`#include </usr/local/include/RF24/RF24.h>`  
+au lieu de  
+`#include <RF24.h>`  
+  
+`RF24 radio(22,0);`  
+au lieu de   
+`RF24 radio("/dev/spidev0.0",8000000 , 25);`  
