@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
-#include <RF24.h>
+#include </usr/local/include/RF24/RF24.h>
 
 volatile sig_atomic_t flag = 0;
 void quit(int sig) {
@@ -32,7 +32,7 @@ const int NRF_CHANNEL = 0x4c;
 const uint64_t default_addr = 0xE056D446D0LL;
 
 //RF24 radio(RPI_V2_GPIO_P1_15, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_8MHZ);
-RF24 radio("/dev/spidev0.0",8000000 , 25);
+RF24 radio(22,0);
 
 // Named pipe
 int fd;
