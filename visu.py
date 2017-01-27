@@ -7,22 +7,29 @@ import requests
 import subprocess
 import sys
 
-
 from libcitizenwatt import cache
 from libcitizenwatt import database
 from libcitizenwatt import tools
 from bottle import abort, Bottle, SimpleTemplate, static_file
 from bottle import redirect, request, run
+from bottle import response
 from bottle.ext import sqlalchemy
 from bottlesession import PickleSession, authenticator
 from libcitizenwatt.config import Config
 from sqlalchemy import create_engine, desc
 from sqlalchemy.exc import OperationalError, ProgrammingError
 
-
 # =========
 # Functions
 # =========
+
+def enable_cors(func):
+    def wrapper(*args, **kwargs):
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return func(*args, **kwargs)
+
+    return wrapper
+
 def get_rate_type(db):
     """Returns "day" or "night" according to current time"""
     session = session_manager.get_session()
@@ -207,6 +214,7 @@ def api_types_post(db):
 
 @app.route("/api/time",
            apply=valid_user())
+@enable_cors
 def api_time(db):
     """
     Returns current timestamp on the server side."""
@@ -217,6 +225,7 @@ def api_time(db):
 
 @app.route("/api/time",
            method="post")
+@enable_cors
 def api_time_post(db):
     if api_auth(request.POST, db):
         return api_time(db)
@@ -264,6 +273,7 @@ def api_get_id_post(sensor, id1, db):
 
 @app.route("/api/<sensor:int>/get/<watt_euros:re:watts|kwatthours|euros>/by_id/<id1:int>/<id2:int>",
            apply=valid_user())
+@enable_cors
 def api_get_ids(sensor, watt_euros, id1, id2, db):
     """
     Returns measures between ids <id1> and <id2> from sensor <sensor> in
@@ -294,6 +304,7 @@ def api_get_ids(sensor, watt_euros, id1, id2, db):
 
 @app.route("/api/<sensor:int>/get/<watt_euros:re:watts|kwatthours|euros>/by_id/<id1:int>/<id2:int>",
            method="post")
+@enable_cors
 def api_get_ids_post(sensor, watt_euros, id1, id2, db):
     if api_auth(request.POST, db):
         return api_get_ids(sensor, watt_euros, id1, id2, db)
@@ -865,6 +876,7 @@ def install(db):
            name="install",
            template="install",
            method="post")
+
 def install_post(db):
     """Install view with POST data"""
     error = None
